@@ -5,7 +5,8 @@
 
 #define Genislik_BOYUTU 1150
 #define Yükseklik_BOYUTU 700
-typedef enum { EKRAN_KULLANICI_GIRISI, EKRAN_KISI } KullaniciDurumu;
+typedef enum { EKRAN_KULLANICI_GIRISI, EKRAN_KISI } EkranDurumu;
+typedef enum { ADMIN,UYE } UyeDurumu;
 struct kitap {
     char isim[50];
     int yil;
@@ -23,23 +24,42 @@ void dosyayaYaz(struct kitap eklenecekKitap) {
 }
 
 int main() {
+    EkranDurumu mevcutDurum = EKRAN_KULLANICI_GIRISI;
+    UyeDurumu girisYapan = UYE;
     InitWindow(Genislik_BOYUTU, Yükseklik_BOYUTU, "Kutuphane Yonetim Sistemi");
     SetTargetFPS(60); 
     int aktifKutu = 0; 
     char girdiIsim[50] = "\0",girdiYazar[50] = "\0",girdiYil[10] = "\0";
     int harfSayisiIsim = 0,harfSayisiYil = 0,harfSayisiYazar = 0;
+    Rectangle adminButon = { 400, 250, 350, 60 };
+    Rectangle uyeButon = { 400, 350, 350, 60 };
+
     while (!WindowShouldClose()) {
+        if (mevcutDurum == EKRAN_KULLANICI_GIRISI) {
+            Vector2 farePozisyonu = GetMousePosition();
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                if (CheckCollisionPointRec(farePozisyonu, adminButon)) {
+                    girisYapan = ADMIN;
+                    mevcutDurum = EKRAN_KISI; 
+                }
+                else if (CheckCollisionPointRec(farePozisyonu, uyeButon)) {
+                    girisYapan = UYE;
+                    mevcutDurum = EKRAN_KISI;
+                }
+            }
+        } 
+        else if (mevcutDurum == EKRAN_KISI) {
         if (aktifKutu < 3) {            
             int tus = GetCharPressed();
             while (tus > 0) {
                 if ((tus >= 32) && (tus <= 125)) {
                     if (aktifKutu == 0 && harfSayisiIsim < 49) {
                         girdiIsim[harfSayisiIsim] = (char)tus;
-                        girdiIsim[harfSayisiIsim + 1] = '\0'; // Metnin sonunu kapat
+                        girdiIsim[harfSayisiIsim + 1] = '\0';
                         harfSayisiIsim++;
                     }
                     else if (aktifKutu == 1 && harfSayisiYil < 9) {
-                        if (tus >= '0' && tus <= '9') { // Yıl için SADECE rakamlara izin ver
+                        if (tus >= '0' && tus <= '9') {
                             girdiYil[harfSayisiYil] = (char)tus;
                             girdiYil[harfSayisiYil + 1] = '\0';
                             harfSayisiYil++;
@@ -77,27 +97,40 @@ int main() {
                 }
             }
         }
+    }
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        if (aktifKutu < 3) {
-            DrawText("Yeni Kitap Ekle (Sonraki alana gecmek icin ENTER'a basin)", 50, 50, 30, DARKGRAY);
-            DrawText("Kitap Ismi:", 50, 150, 25, DARKGRAY);//kutu1
-            DrawRectangle(250, 140, 500, 45, (aktifKutu == 0) ? LIGHTGRAY : RAYWHITE);
-            DrawRectangleLines(250, 140, 500, 45, DARKGRAY);
-            DrawText(girdiIsim, 260, 150, 25, MAROON);
-            DrawText("Basim Yili:", 50, 220, 25, DARKGRAY);//kutu2
-            DrawRectangle(250, 210, 500, 45, (aktifKutu == 1) ? LIGHTGRAY : RAYWHITE);
-            DrawRectangleLines(250, 210, 500, 45, DARKGRAY);
-            DrawText(girdiYil, 260, 220, 25, MAROON);
-            DrawText("Yazar Ismi:", 50, 290, 25, DARKGRAY);//kutu3
-            DrawRectangle(250, 280, 500, 45, (aktifKutu == 2) ? LIGHTGRAY : RAYWHITE);
-            DrawRectangleLines(250, 280, 500, 45, DARKGRAY);
-            DrawText(girdiYazar, 260, 290, 25, MAROON);
-            if (aktifKutu == 0) DrawText("-> Isim yaziliyor...", 780, 150, 20, GRAY);
-            if (aktifKutu == 1) DrawText("-> Sadece sayi giriniz...", 780, 220, 20, GRAY);
-            if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 290, 20, GRAY);
-        } else {
-            DrawText("Kitap sisteme eklendi.", 50, 100, 35, DARKGREEN);
+        if (mevcutDurum == EKRAN_KULLANICI_GIRISI) {
+            DrawText("KUTUPHANE SISTEMINE HOSGELDINIZ", 250, 100, 35, DARKBLUE);
+            DrawRectangleRec(adminButon, LIGHTGRAY);
+            DrawRectangleLinesEx(adminButon, 2, DARKGRAY);
+            DrawText("ADMIN Girisi", adminButon.x + 35, adminButon.y + 15, 25, BLACK);
+            DrawRectangleRec(uyeButon, LIGHTGRAY);
+            DrawRectangleLinesEx(uyeButon, 2, DARKGRAY);
+            DrawText("UYE Girisi", uyeButon.x + 45, uyeButon.y + 15, 25, BLACK);
+        }else if(mevcutDurum == EKRAN_KISI) {
+            if(girisYapan == ADMIN){
+                if (aktifKutu < 3) {
+                    DrawText("Yeni Kitap Ekle (Sonraki alana gecmek icin ENTER'a basin)", 50, 50, 30, DARKGRAY);
+                    DrawText("Kitap Ismi:", 50, 150, 25, DARKGRAY);//kutu1
+                    DrawRectangle(250, 140, 500, 45, (aktifKutu == 0) ? LIGHTGRAY : RAYWHITE);
+                    DrawRectangleLines(250, 140, 500, 45, DARKGRAY);
+                    DrawText(girdiIsim, 260, 150, 25, MAROON);
+                    DrawText("Basim Yili:", 50, 220, 25, DARKGRAY);//kutu2
+                    DrawRectangle(250, 210, 500, 45, (aktifKutu == 1) ? LIGHTGRAY : RAYWHITE);
+                    DrawRectangleLines(250, 210, 500, 45, DARKGRAY);
+                    DrawText(girdiYil, 260, 220, 25, MAROON);
+                    DrawText("Yazar Ismi:", 50, 290, 25, DARKGRAY);//kutu3
+                    DrawRectangle(250, 280, 500, 45, (aktifKutu == 2) ? LIGHTGRAY : RAYWHITE);
+                    DrawRectangleLines(250, 280, 500, 45, DARKGRAY);
+                    DrawText(girdiYazar, 260, 290, 25, MAROON);
+                    if (aktifKutu == 0) DrawText("-> Isim yaziliyor...", 780, 150, 20, GRAY);
+                    if (aktifKutu == 1) DrawText("-> Sadece sayi giriniz...", 780, 220, 20, GRAY);
+                    if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 290, 20, GRAY);
+                } else {
+                    DrawText("Kitap sisteme eklendi.", 50, 100, 35, DARKGREEN);
+                }
+        }
         }
         EndDrawing();
     }
