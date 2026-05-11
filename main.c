@@ -23,6 +23,30 @@ void dosyayaYaz(struct kitap eklenecekKitap) {
     fclose(dosya);
 }
 
+void metinGirisiAl(char *metin,int *harfSayisi,int maxHarf,int sadeceSayi){
+    int tus = GetCharPressed();
+    while (tus > 0) {
+        if ((tus >= 32) && (tus <= 125)) {
+            if (*harfSayisi < maxHarf) {
+                if (sadeceSayi == 1 && !(tus >= '0' && tus <= '9')) {
+                    tus = GetCharPressed();
+                    continue; 
+                }
+                metin[*harfSayisi] = (char)tus;
+                metin[*harfSayisi + 1] = '\0';
+                (*harfSayisi)++;
+            }
+        }
+        tus = GetCharPressed();
+    }
+    if (IsKeyPressed(KEY_BACKSPACE)) {
+        if (*harfSayisi > 0) {
+            (*harfSayisi)--;
+            metin[*harfSayisi] = '\0';
+        }
+    }
+}
+
 int main() {
     EkranDurumu mevcutDurum = EKRAN_KULLANICI_GIRISI;
     UyeDurumu girisYapan = UYE;
@@ -49,55 +73,23 @@ int main() {
             }
         } 
         else if (mevcutDurum == EKRAN_KISI) {
-        if (aktifKutu < 3) {            
-            int tus = GetCharPressed();
-            while (tus > 0) {
-                if ((tus >= 32) && (tus <= 125)) {
-                    if (aktifKutu == 0 && harfSayisiIsim < 49) {
-                        girdiIsim[harfSayisiIsim] = (char)tus;
-                        girdiIsim[harfSayisiIsim + 1] = '\0';
-                        harfSayisiIsim++;
+            if (aktifKutu < 3) {
+                if (aktifKutu == 0 && harfSayisiIsim < 49) metinGirisiAl(girdiIsim, &harfSayisiIsim,49,0);
+                else if (aktifKutu == 1 && harfSayisiYil < 9) metinGirisiAl(girdiYil, &harfSayisiYil,49,1);
+                else if (aktifKutu == 2 && harfSayisiYazar < 49) metinGirisiAl(girdiYazar, &harfSayisiYazar,49,0);
+
+                if (IsKeyPressed(KEY_ENTER)){
+                    aktifKutu++;
+                    if (aktifKutu == 3) {
+                        strcpy(kitaplar[0].isim, girdiIsim);
+                        kitaplar[0].yil = atoi(girdiYil);
+                        strcpy(kitaplar[0].yazar, girdiYazar);
+                        dosyayaYaz(kitaplar[0]);
                     }
-                    else if (aktifKutu == 1 && harfSayisiYil < 9) {
-                        if (tus >= '0' && tus <= '9') {
-                            girdiYil[harfSayisiYil] = (char)tus;
-                            girdiYil[harfSayisiYil + 1] = '\0';
-                            harfSayisiYil++;
-                        }
-                    }
-                    else if (aktifKutu == 2 && harfSayisiYazar < 49) {
-                        girdiYazar[harfSayisiYazar] = (char)tus;
-                        girdiYazar[harfSayisiYazar + 1] = '\0';
-                        harfSayisiYazar++;
-                    }
-                }
-                tus = GetCharPressed();
-            }
-            if (IsKeyPressed(KEY_BACKSPACE)) {
-                if (aktifKutu == 0 && harfSayisiIsim > 0) {
-                    harfSayisiIsim--;
-                    girdiIsim[harfSayisiIsim] = '\0';
-                }
-                else if (aktifKutu == 1 && harfSayisiYil > 0) {
-                    harfSayisiYil--;
-                    girdiYil[harfSayisiYil] = '\0';
-                }
-                else if (aktifKutu == 2 && harfSayisiYazar > 0) {
-                    harfSayisiYazar--;
-                    girdiYazar[harfSayisiYazar] = '\0';
-                }
-            }
-            if (IsKeyPressed(KEY_ENTER)) {
-                aktifKutu++;
-                if (aktifKutu == 3) {
-                    strcpy(kitaplar[0].isim, girdiIsim);
-                    kitaplar[0].yil = atoi(girdiYil);
-                    strcpy(kitaplar[0].yazar, girdiYazar);
-                    dosyayaYaz(kitaplar[0]);
                 }
             }
         }
-    }
+            
         BeginDrawing();
         ClearBackground(RAYWHITE);
         if (mevcutDurum == EKRAN_KULLANICI_GIRISI) {
@@ -128,8 +120,26 @@ int main() {
                     if (aktifKutu == 1) DrawText("-> Sadece sayi giriniz...", 780, 220, 20, GRAY);
                     if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 290, 20, GRAY);
                 } else {
-                    DrawText("Kitap sisteme eklendi.", 50, 100, 35, DARKGREEN);
-                }
+                    DrawText("Kitap sisteme eklendi.", 400, 150, 35, DARKGREEN);
+                    DrawText("Geri donmek icin TAB", 400, 200, 35, DARKGREEN);
+                    if(IsKeyPressed(KEY_TAB)){
+                        aktifKutu=0;
+                        memset(girdiIsim,0,sizeof(girdiIsim));
+                        memset(girdiYil,0,sizeof(girdiYil));
+                        memset(girdiYazar,0,sizeof(girdiYazar));
+                        harfSayisiIsim=0;
+                        harfSayisiYil=0;
+                        harfSayisiYazar=0;
+                    }
+                    Rectangle menuButon = { 50, 50, 150, 60 };
+                    DrawRectangleRec(menuButon, LIGHTGRAY);
+                    DrawText("MENU", menuButon.x + 35, menuButon.y + 15, 25, BLACK);
+                    Vector2 farePozisyonu = GetMousePosition();
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                        if (CheckCollisionPointRec(farePozisyonu, menuButon))
+                            mevcutDurum = EKRAN_KULLANICI_GIRISI;
+                    }
+                }   
         }
         }
         EndDrawing();
