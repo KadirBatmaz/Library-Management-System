@@ -57,8 +57,9 @@ int main() {
     int harfSayisiIsim = 0,harfSayisiYil = 0,harfSayisiYazar = 0;
     Rectangle adminButon = { 400, 250, 350, 60 };
     Rectangle uyeButon = { 400, 350, 350, 60 };
-    Rectangle ekleButon = { 50, 50, 350, 60 };
+    Rectangle ekleButon = { 50, 190, 350, 60 };
     Rectangle menuButon = { 50, 50, 150, 60 };
+    Rectangle geriButon = { 50, 120, 150, 60 };
     
 
     while (!WindowShouldClose()) {
@@ -77,6 +78,15 @@ int main() {
             }
         } 
         else if (mevcutDurum == EKRAN_KISI) {
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, menuButon)){
+                mevcutDurum = EKRAN_KULLANICI_GIRISI;}
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, geriButon)){
+                if(girisYapan == ADMIN && adminDurumu == 1) {
+                    adminDurumu = 0;
+                } else {
+                    mevcutDurum = EKRAN_KULLANICI_GIRISI;
+                }
+            }
             if (girisYapan==ADMIN){
                 if(adminDurumu==0){
                     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, ekleButon)) {
@@ -104,15 +114,12 @@ int main() {
                         }
                     }
                     else {
-                        if (IsKeyPressed(KEY_TAB)) {
+                        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, ekleButon)) {
                             aktifKutu = 0;
                             memset(girdiIsim, 0, sizeof(girdiIsim));
                             memset(girdiYil, 0, sizeof(girdiYil));
                             memset(girdiYazar, 0, sizeof(girdiYazar));
                             harfSayisiIsim = 0; harfSayisiYil = 0; harfSayisiYazar = 0;
-                        }
-                        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, menuButon)) {
-                            mevcutDurum = EKRAN_KULLANICI_GIRISI;
                         }
                     }
                 }
@@ -129,33 +136,35 @@ int main() {
             DrawRectangleLinesEx(uyeButon, 2, DARKGRAY);
             DrawText("UYE Girisi", uyeButon.x + 45, uyeButon.y + 15, 25, BLACK);
         }else if(mevcutDurum == EKRAN_KISI) {
+            DrawRectangleRec(menuButon, LIGHTGRAY);
+            DrawText("MENU", menuButon.x + 35, menuButon.y + 15, 25, BLACK);
+            DrawRectangleRec(geriButon, LIGHTGRAY);
+            DrawText("GERI", geriButon.x + 35, geriButon.y + 15, 25, BLACK);
             if(girisYapan == ADMIN){
                 if(adminDurumu==0){
                     DrawRectangleRec(ekleButon,DARKGRAY);
                     DrawText("Kitap Ekle", ekleButon.x + 35, ekleButon.y + 15, 25, BLACK);
-                }else if(adminDurumu=1){
+                }else if(adminDurumu==1){
                     if (aktifKutu < 3) {
-                        DrawText("Yeni Kitap Ekle (Sonraki alana gecmek icin ENTER'a basin)", 50, 50, 30, DARKGRAY);
-                        DrawText("Kitap Ismi:", 50, 150, 25, DARKGRAY);//kutu1
-                        DrawRectangle(250, 140, 500, 45, (aktifKutu == 0) ? LIGHTGRAY : RAYWHITE);
-                        DrawRectangleLines(250, 140, 500, 45, DARKGRAY);
-                        DrawText(girdiIsim, 260, 150, 25, MAROON);
-                        DrawText("Basim Yili:", 50, 220, 25, DARKGRAY);//kutu2
-                        DrawRectangle(250, 210, 500, 45, (aktifKutu == 1) ? LIGHTGRAY : RAYWHITE);
-                        DrawRectangleLines(250, 210, 500, 45, DARKGRAY);
-                        DrawText(girdiYil, 260, 220, 25, MAROON);
-                        DrawText("Yazar Ismi:", 50, 290, 25, DARKGRAY);//kutu3
-                        DrawRectangle(250, 280, 500, 45, (aktifKutu == 2) ? LIGHTGRAY : RAYWHITE);
-                        DrawRectangleLines(250, 280, 500, 45, DARKGRAY);
-                        DrawText(girdiYazar, 260, 290, 25, MAROON);
-                        if (aktifKutu == 0) DrawText("-> Isim yaziliyor...", 780, 150, 20, GRAY);
-                        if (aktifKutu == 1) DrawText("-> Sadece sayi giriniz...", 780, 220, 20, GRAY);
-                        if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 290, 20, GRAY);
+                        DrawText("Yeni Kitap Ekle (Sonraki alana gecmek icin ENTER'a basin)", 50, 250, 30, DARKGRAY);
+                        DrawText("Kitap Ismi:", 50, 350, 25, DARKGRAY);//kutu1
+                        DrawRectangle(250, 340, 500, 45, (aktifKutu == 0) ? LIGHTGRAY : RAYWHITE);
+                        DrawRectangleLines(250, 340, 500, 45, DARKGRAY);
+                        DrawText(girdiIsim, 260, 350, 25, MAROON);
+                        DrawText("Basim Yili:", 50, 420, 25, DARKGRAY);//kutu2
+                        DrawRectangle(250, 410, 500, 45, (aktifKutu == 1) ? LIGHTGRAY : RAYWHITE);
+                        DrawRectangleLines(250, 410, 500, 45, DARKGRAY);
+                        DrawText(girdiYil, 260, 420, 25, MAROON);
+                        DrawText("Yazar Ismi:", 50, 490, 25, DARKGRAY);//kutu3
+                        DrawRectangle(250, 480, 500, 45, (aktifKutu == 2) ? LIGHTGRAY : RAYWHITE);
+                        DrawRectangleLines(250, 480, 500, 45, DARKGRAY);
+                        DrawText(girdiYazar, 260, 490, 25, MAROON);
+                        if (aktifKutu == 0) DrawText("-> Isim yaziliyor...", 780, 350, 20, GRAY);
+                        if (aktifKutu == 1) DrawText("-> Sadece sayi giriniz...", 780, 420, 20, GRAY);
+                        if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 490, 20, GRAY);
                     }else{
                         DrawText("Kitap sisteme eklendi.", 400, 150, 35, DARKGREEN);
                         DrawText("tekrar eklememk icin TAB", 400, 200, 35, DARKGREEN);
-                        DrawRectangleRec(menuButon, LIGHTGRAY);
-                        DrawText("MENU", menuButon.x + 35, menuButon.y + 15, 25, BLACK);
                     }   
                 }
             }
