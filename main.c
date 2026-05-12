@@ -52,19 +52,23 @@ int main() {
     UyeDurumu girisYapan = UYE;
     InitWindow(Genislik_BOYUTU, Yükseklik_BOYUTU, "Kutuphane Yonetim Sistemi");
     SetTargetFPS(60); 
-    int aktifKutu = 0; 
+    int aktifKutu=0,adminDurumu=0; 
     char girdiIsim[50] = "\0",girdiYazar[50] = "\0",girdiYil[10] = "\0";
     int harfSayisiIsim = 0,harfSayisiYil = 0,harfSayisiYazar = 0;
     Rectangle adminButon = { 400, 250, 350, 60 };
     Rectangle uyeButon = { 400, 350, 350, 60 };
+    Rectangle ekleButon = { 50, 50, 350, 60 };
+    Rectangle menuButon = { 50, 50, 150, 60 };
+    
 
     while (!WindowShouldClose()) {
+        Vector2 farePozisyonu = GetMousePosition();
         if (mevcutDurum == EKRAN_KULLANICI_GIRISI) {
-            Vector2 farePozisyonu = GetMousePosition();
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
                 if (CheckCollisionPointRec(farePozisyonu, adminButon)) {
                     girisYapan = ADMIN;
-                    mevcutDurum = EKRAN_KISI; 
+                    mevcutDurum = EKRAN_KISI;
+                    adminDurumu=0;
                 }
                 else if (CheckCollisionPointRec(farePozisyonu, uyeButon)) {
                     girisYapan = UYE;
@@ -73,23 +77,47 @@ int main() {
             }
         } 
         else if (mevcutDurum == EKRAN_KISI) {
-            if (aktifKutu < 3) {
-                if (aktifKutu == 0 && harfSayisiIsim < 49) metinGirisiAl(girdiIsim, &harfSayisiIsim,49,0);
-                else if (aktifKutu == 1 && harfSayisiYil < 9) metinGirisiAl(girdiYil, &harfSayisiYil,49,1);
-                else if (aktifKutu == 2 && harfSayisiYazar < 49) metinGirisiAl(girdiYazar, &harfSayisiYazar,49,0);
-
-                if (IsKeyPressed(KEY_ENTER)){
-                    aktifKutu++;
-                    if (aktifKutu == 3) {
-                        strcpy(kitaplar[0].isim, girdiIsim);
-                        kitaplar[0].yil = atoi(girdiYil);
-                        strcpy(kitaplar[0].yazar, girdiYazar);
-                        dosyayaYaz(kitaplar[0]);
+            if (girisYapan==ADMIN){
+                if(adminDurumu==0){
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, ekleButon)) {
+                        adminDurumu = 1;
+                        aktifKutu = 0;
+                        memset(girdiIsim, 0, sizeof(girdiIsim));
+                        memset(girdiYil, 0, sizeof(girdiYil));
+                        memset(girdiYazar, 0, sizeof(girdiYazar));
+                        harfSayisiIsim = 0; harfSayisiYil = 0; harfSayisiYazar = 0;
+                    }
+                } 
+                else if (adminDurumu==1) {
+                    if (aktifKutu < 3) {
+                        if (aktifKutu == 0 && harfSayisiIsim < 49) metinGirisiAl(girdiIsim, &harfSayisiIsim,49,0);
+                        else if (aktifKutu == 1 && harfSayisiYil < 9) metinGirisiAl(girdiYil, &harfSayisiYil,9,1);
+                        else if (aktifKutu == 2 && harfSayisiYazar < 49) metinGirisiAl(girdiYazar, &harfSayisiYazar,49,0);
+                        if (IsKeyPressed(KEY_ENTER)){
+                            aktifKutu++;
+                            if (aktifKutu == 3) {
+                                strcpy(kitaplar[0].isim, girdiIsim);
+                                kitaplar[0].yil = atoi(girdiYil);
+                                strcpy(kitaplar[0].yazar, girdiYazar);
+                                dosyayaYaz(kitaplar[0]);
+                            }
+                        }
+                    }
+                    else {
+                        if (IsKeyPressed(KEY_TAB)) {
+                            aktifKutu = 0;
+                            memset(girdiIsim, 0, sizeof(girdiIsim));
+                            memset(girdiYil, 0, sizeof(girdiYil));
+                            memset(girdiYazar, 0, sizeof(girdiYazar));
+                            harfSayisiIsim = 0; harfSayisiYil = 0; harfSayisiYazar = 0;
+                        }
+                        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, menuButon)) {
+                            mevcutDurum = EKRAN_KULLANICI_GIRISI;
+                        }
                     }
                 }
             }
-        }
-            
+        }  
         BeginDrawing();
         ClearBackground(RAYWHITE);
         if (mevcutDurum == EKRAN_KULLANICI_GIRISI) {
@@ -102,45 +130,38 @@ int main() {
             DrawText("UYE Girisi", uyeButon.x + 45, uyeButon.y + 15, 25, BLACK);
         }else if(mevcutDurum == EKRAN_KISI) {
             if(girisYapan == ADMIN){
-                if (aktifKutu < 3) {
-                    DrawText("Yeni Kitap Ekle (Sonraki alana gecmek icin ENTER'a basin)", 50, 50, 30, DARKGRAY);
-                    DrawText("Kitap Ismi:", 50, 150, 25, DARKGRAY);//kutu1
-                    DrawRectangle(250, 140, 500, 45, (aktifKutu == 0) ? LIGHTGRAY : RAYWHITE);
-                    DrawRectangleLines(250, 140, 500, 45, DARKGRAY);
-                    DrawText(girdiIsim, 260, 150, 25, MAROON);
-                    DrawText("Basim Yili:", 50, 220, 25, DARKGRAY);//kutu2
-                    DrawRectangle(250, 210, 500, 45, (aktifKutu == 1) ? LIGHTGRAY : RAYWHITE);
-                    DrawRectangleLines(250, 210, 500, 45, DARKGRAY);
-                    DrawText(girdiYil, 260, 220, 25, MAROON);
-                    DrawText("Yazar Ismi:", 50, 290, 25, DARKGRAY);//kutu3
-                    DrawRectangle(250, 280, 500, 45, (aktifKutu == 2) ? LIGHTGRAY : RAYWHITE);
-                    DrawRectangleLines(250, 280, 500, 45, DARKGRAY);
-                    DrawText(girdiYazar, 260, 290, 25, MAROON);
-                    if (aktifKutu == 0) DrawText("-> Isim yaziliyor...", 780, 150, 20, GRAY);
-                    if (aktifKutu == 1) DrawText("-> Sadece sayi giriniz...", 780, 220, 20, GRAY);
-                    if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 290, 20, GRAY);
-                } else {
-                    DrawText("Kitap sisteme eklendi.", 400, 150, 35, DARKGREEN);
-                    DrawText("Geri donmek icin TAB", 400, 200, 35, DARKGREEN);
-                    if(IsKeyPressed(KEY_TAB)){
-                        aktifKutu=0;
-                        memset(girdiIsim,0,sizeof(girdiIsim));
-                        memset(girdiYil,0,sizeof(girdiYil));
-                        memset(girdiYazar,0,sizeof(girdiYazar));
-                        harfSayisiIsim=0;
-                        harfSayisiYil=0;
-                        harfSayisiYazar=0;
-                    }
-                    Rectangle menuButon = { 50, 50, 150, 60 };
-                    DrawRectangleRec(menuButon, LIGHTGRAY);
-                    DrawText("MENU", menuButon.x + 35, menuButon.y + 15, 25, BLACK);
-                    Vector2 farePozisyonu = GetMousePosition();
-                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-                        if (CheckCollisionPointRec(farePozisyonu, menuButon))
-                            mevcutDurum = EKRAN_KULLANICI_GIRISI;
-                    }
-                }   
-        }
+                if(adminDurumu==0){
+                    DrawRectangleRec(ekleButon,DARKGRAY);
+                    DrawText("Kitap Ekle", ekleButon.x + 35, ekleButon.y + 15, 25, BLACK);
+                }else if(adminDurumu=1){
+                    if (aktifKutu < 3) {
+                        DrawText("Yeni Kitap Ekle (Sonraki alana gecmek icin ENTER'a basin)", 50, 50, 30, DARKGRAY);
+                        DrawText("Kitap Ismi:", 50, 150, 25, DARKGRAY);//kutu1
+                        DrawRectangle(250, 140, 500, 45, (aktifKutu == 0) ? LIGHTGRAY : RAYWHITE);
+                        DrawRectangleLines(250, 140, 500, 45, DARKGRAY);
+                        DrawText(girdiIsim, 260, 150, 25, MAROON);
+                        DrawText("Basim Yili:", 50, 220, 25, DARKGRAY);//kutu2
+                        DrawRectangle(250, 210, 500, 45, (aktifKutu == 1) ? LIGHTGRAY : RAYWHITE);
+                        DrawRectangleLines(250, 210, 500, 45, DARKGRAY);
+                        DrawText(girdiYil, 260, 220, 25, MAROON);
+                        DrawText("Yazar Ismi:", 50, 290, 25, DARKGRAY);//kutu3
+                        DrawRectangle(250, 280, 500, 45, (aktifKutu == 2) ? LIGHTGRAY : RAYWHITE);
+                        DrawRectangleLines(250, 280, 500, 45, DARKGRAY);
+                        DrawText(girdiYazar, 260, 290, 25, MAROON);
+                        if (aktifKutu == 0) DrawText("-> Isim yaziliyor...", 780, 150, 20, GRAY);
+                        if (aktifKutu == 1) DrawText("-> Sadece sayi giriniz...", 780, 220, 20, GRAY);
+                        if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 290, 20, GRAY);
+                    }else{
+                        DrawText("Kitap sisteme eklendi.", 400, 150, 35, DARKGREEN);
+                        DrawText("tekrar eklememk icin TAB", 400, 200, 35, DARKGREEN);
+                        DrawRectangleRec(menuButon, LIGHTGRAY);
+                        DrawText("MENU", menuButon.x + 35, menuButon.y + 15, 25, BLACK);
+                    }   
+                }
+            }
+            else if(girisYapan==UYE){
+                DrawText("YAKINDA...", 400, 200, 35, DARKGREEN);
+            }
         }
         EndDrawing();
     }
