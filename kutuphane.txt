@@ -1,12 +1,100 @@
-suc ve ceza,2006,dostoyevski
-Gece Yarisi Ktutuphanesi,2009,Matt Haig
-n,5,s
-he,6,e
-acac,5,a
-nrhjrj,5,te
-wf,5,6
-p,5,f
-ff,5,sf
-mlms,5,sf
-da,5,da
-gw,884,wgw
+suc ve ceza,1866,fyodor dostoyevski
+sefiller,1862,victor hugo
+gurur ve onyargi,1813,jane austen
+1984,1949,george orwell
+hayvan ciftligi,1945,george orwell
+yeraltindan notlar,1864,fyodor dostoyevski
+kumarbaz,1867,fyodor dostoyevski
+anna karenina,1877,lev tolstoy
+savas ve baris,1869,lev tolstoy
+don kisot,1605,miguel de cervantes
+yuz yillik yalnizlik,1967,gabriel garcia marquez
+kolera gunlerinde ask,1985,gabriel garcia marquez
+kirmizi pazartesi,1981,gabriel garcia marquez
+calikusu,1922,resat nuri guntekin
+yaprak dokumu,1930,resat nuri guntekin
+dudaktan kalbe,1925,resat nuri guntekin
+acimak,1928,resat nuri guntekin
+eylul,1901,mehmet rauf
+ask i memnu,1900,halid ziya usakligil
+mai ve siyah,1897,halid ziya usakligil
+intibah,1876,namik kemal
+vatan yahut silistre,1873,namik kemal
+araba sevdasi,1896,recaizade mahmut ekrem
+serguzest,1888,samipasazade sezai
+tutunamayanlar,1972,oguz atay
+tehlikeli oyunlar,1973,oguz atay
+bir bilim adaminin romani,1975,oguz atay
+saatleri ayarlama enstitusu,1961,ahmet hamdi tanpinar
+huzur,1949,ahmet hamdi tanpinar
+sahnenin disindakiler,1950,ahmet hamdi tanpinar
+mahur beste,1944,ahmet hamdi tanpinar
+ince memed,1955,yasar kemal
+yer demir gok bakir,1963,yasar kemal
+ortadirek,1960,yasar kemal
+olmez otu,1968,yasar kemal
+yilanlarin ocu,1954,fakir baykurt
+tirpan,1970,fakir baykurt
+kaplumbagalar,1967,fakir baykurt
+onuncu koy,1961,fakir baykurt
+aylak adam,1959,yusuf atilgan
+anayurt oteli,1973,yusuf atilgan
+canistan,2000,yusuf atilgan
+benim adim kirmizi,1998,orhan pamuk
+kar,2002,orhan pamuk
+masumiyet muzesi,2008,orhan pamuk
+beyaz kale,1985,orhan pamuk
+kara kitap,1990,orhan pamuk
+yeni hayat,1994,orhan pamuk
+sessiz ev,1983,orhan pamuk
+simyaci,1988,paulo coelho
+veronika olmek istiyor,1998,paulo coelho
+on bir dakika,2003,paulo coelho
+kucuk prens,1943,antoine de saint exupery
+seker portakali,1968,jose mauro de vasconcelos
+gunesi uyandiralim,1974,jose mauro de vasconcelos
+delifisek,1963,jose mauro de vasconcelos
+ucurtma avcisi,2003,khaled hosseini
+bin muhtesem gunes,2007,khaled hosseini
+ve daglara yankilandi,2013,khaled hosseini
+fareler ve insanlar,1937,john steinbeck
+gazap uzumleri,1939,john steinbeck
+cennetin dogusu,1952,john steinbeck
+inci,1947,john steinbeck
+bulbulu oldurmek,1960,harper lee
+tespih agacinin golgesinde,2015,harper lee
+yabanci,1942,albert camus
+veba,1947,albert camus
+dusus,1956,albert camus
+donusum,1915,franz kafka
+dava,1925,franz kafka
+sato,1926,franz kafka
+amerika,1927,franz kafka
+korluk,1995,jose saramago
+gormek,2004,jose saramago
+olum bir varmis bir yokmus,2005,jose saramago
+kabil,2009,jose saramago
+martin eden,1909,jack london
+beyaz dis,1906,jack london
+vahsetin cagrisi,1903,jack london
+deniz kurdu,1904,jack london
+moby dick,1851,herman melville
+bartleby,1853,herman melville
+frankenstein,1818,mary shelley
+dracula,1897,bram stoker
+dorian gray in portresi,1890,oscar wilde
+usta ve margarita,1967,mihail bulgakov
+kopek kalbi,1968,mihail bulgakov
+lolita,1955,vladimir nabokov
+solgun ates,1962,vladimir nabokov
+kuzey isiklari,1995,philip pullman
+kehribar durbun,2000,philip pullman
+keskin bicak,1997,philip pullman
+fahrenheit 451,1953,ray bradbury
+mars yilliklari,1950,ray bradbury
+resimli adam,1951,ray bradbury
+cesur yeni dunya,1932,aldous huxley
+algi kapilari,1954,aldous huxley
+ada,1962,aldous huxley
+otostopcunun galaksi rehberi,1979,douglas adams
+dune,1965,frank herbert

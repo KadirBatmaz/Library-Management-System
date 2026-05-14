@@ -12,6 +12,8 @@ struct kitap {
     int yil;
     char yazar[50];
 } kitaplar[100];
+struct kitap aramaSonuclari[100];
+int bulunanKitapSayisi = 0;
 
 void dosyayaYaz(struct kitap eklenecekKitap) {
     FILE *dosya = fopen("kutuphane.txt", "a");
@@ -46,20 +48,46 @@ void metinGirisiAl(char *metin,int *harfSayisi,int maxHarf,int sadeceSayi){
         }
     }
 }
+void kitapAra(int kriter, char *aranan) {
+    bulunanKitapSayisi = 0;
+    memset(aramaSonuclari, 0, sizeof(aramaSonuclari));
+    FILE *dosya = fopen("kutuphane.txt", "r");
+    if (dosya == NULL) return;
+    char satir[150];
+    struct kitap okunanKitap;
+    while (fgets(satir, sizeof(satir), dosya) && bulunanKitapSayisi < 100) {
+        if (sscanf(satir, "%[^,],%d,%[^\n]", okunanKitap.isim, &okunanKitap.yil, okunanKitap.yazar) == 3) {
+            int eslesme = 0;
+            if (kriter == 0 && strstr(okunanKitap.isim, aranan) != NULL) eslesme = 1;
+            else if (kriter == 1 && okunanKitap.yil == atoi(aranan)) eslesme = 1;
+            else if (kriter == 2 && strstr(okunanKitap.yazar, aranan) != NULL) eslesme = 1;
+            if (eslesme == 1) {
+                aramaSonuclari[bulunanKitapSayisi] = okunanKitap;
+                bulunanKitapSayisi++;
+            }
+        }
+    }
+    fclose(dosya);
+}
 
 int main() {
     EkranDurumu mevcutDurum = EKRAN_KULLANICI_GIRISI;
     UyeDurumu girisYapan = UYE;
     InitWindow(Genislik_BOYUTU, Yükseklik_BOYUTU, "Kutuphane Yonetim Sistemi");
     SetTargetFPS(60); 
-    int aktifKutu=0,adminDurumu=0; 
-    char girdiIsim[50] = "\0",girdiYazar[50] = "\0",girdiYil[10] = "\0";
+    int aktifKutu=0,adminDurumu=0,uyeDurumu=0,aramaKriteri=0,aramaHarfSayisi=0; 
+    char girdiIsim[50] = "\0",girdiYazar[50] = "\0",girdiYil[10] = "\0",aramaGirdisi[50]="\0";
     int harfSayisiIsim = 0,harfSayisiYil = 0,harfSayisiYazar = 0;
     Rectangle adminButon = { 400, 250, 350, 60 };
     Rectangle uyeButon = { 400, 350, 350, 60 };
-    Rectangle ekleButon = { 50, 190, 350, 60 };
+    Rectangle ekleButon = { 750, 120, 300, 60 };
+    Rectangle araButon = { 750, 50, 300, 60 };
     Rectangle menuButon = { 50, 50, 150, 60 };
     Rectangle geriButon = { 50, 120, 150, 60 };
+    Rectangle isimAra = { 50, 220, 150, 40 };
+    Rectangle yilAra = { 220, 220, 150, 40 };
+    Rectangle yazarAra = { 390, 220, 150, 40 };
+    Rectangle aramaKutusu = { 50, 280, 490, 45 };
     
 
     while (!WindowShouldClose()) {
@@ -74,6 +102,10 @@ int main() {
                 else if (CheckCollisionPointRec(farePozisyonu, uyeButon)) {
                     girisYapan = UYE;
                     mevcutDurum = EKRAN_KISI;
+                    bulunanKitapSayisi = 0;
+                    memset(aramaGirdisi, 0, sizeof(aramaGirdisi));
+                    aramaHarfSayisi = 0;
+                    uyeDurumu=0;
                 }
             }
         } 
@@ -81,23 +113,27 @@ int main() {
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, menuButon)){
                 mevcutDurum = EKRAN_KULLANICI_GIRISI;}
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, geriButon)){
-                if(girisYapan == ADMIN && adminDurumu == 1) {
+                if((girisYapan == ADMIN && adminDurumu == 1)||(girisYapan == ADMIN && adminDurumu == 2)) {
                     adminDurumu = 0;
-                } else {
-                    mevcutDurum = EKRAN_KULLANICI_GIRISI;
-                }
+                } else if((girisYapan == UYE && uyeDurumu == 1)) {
+                    uyeDurumu=0;
+                }else
+                    mevcutDurum=EKRAN_KULLANICI_GIRISI;
             }
             if (girisYapan==ADMIN){
                 if(adminDurumu==0){
                     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, ekleButon)) {
-                        adminDurumu = 1;
-                        aktifKutu = 0;
-                        memset(girdiIsim, 0, sizeof(girdiIsim));
-                        memset(girdiYil, 0, sizeof(girdiYil));
-                        memset(girdiYazar, 0, sizeof(girdiYazar));
+                        adminDurumu = 1; aktifKutu = 0;
+                        memset(girdiIsim, 0, sizeof(girdiIsim));memset(girdiYil, 0, sizeof(girdiYil));memset(girdiYazar, 0, sizeof(girdiYazar));
                         harfSayisiIsim = 0; harfSayisiYil = 0; harfSayisiYazar = 0;
                     }
-                } 
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, araButon)) {
+                            adminDurumu = 2,uyeDurumu=1;
+                            bulunanKitapSayisi = 0;
+                            memset(aramaGirdisi, 0, sizeof(aramaGirdisi));
+                            aramaHarfSayisi = 0;
+                        }
+                }
                 else if (adminDurumu==1) {
                     if (aktifKutu < 3) {
                         if (aktifKutu == 0 && harfSayisiIsim < 49) metinGirisiAl(girdiIsim, &harfSayisiIsim,49,0);
@@ -112,16 +148,25 @@ int main() {
                                 dosyayaYaz(kitaplar[0]);
                             }
                         }
-                    }
-                    else {
+                    }else {
                         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(farePozisyonu, ekleButon)) {
                             aktifKutu = 0;
-                            memset(girdiIsim, 0, sizeof(girdiIsim));
-                            memset(girdiYil, 0, sizeof(girdiYil));
-                            memset(girdiYazar, 0, sizeof(girdiYazar));
+                            memset(girdiIsim, 0, sizeof(girdiIsim));memset(girdiYil, 0, sizeof(girdiYil));memset(girdiYazar, 0, sizeof(girdiYazar));
                             harfSayisiIsim = 0; harfSayisiYil = 0; harfSayisiYazar = 0;
                         }
                     }
+                }
+            }
+            if ((girisYapan == UYE && uyeDurumu==1) || (girisYapan == ADMIN && adminDurumu == 2)) {
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                    if (CheckCollisionPointRec(farePozisyonu, isimAra)) aramaKriteri = 0;
+                    if (CheckCollisionPointRec(farePozisyonu, yilAra)) aramaKriteri = 1;
+                    if (CheckCollisionPointRec(farePozisyonu, yazarAra)) aramaKriteri = 2;
+                }
+                int sadeceSayiMi = (aramaKriteri == 1) ? 1 : 0;
+                metinGirisiAl(aramaGirdisi, &aramaHarfSayisi, 49, sadeceSayiMi);
+                if (IsKeyPressed(KEY_ENTER)) {
+                    kitapAra(aramaKriteri, aramaGirdisi);
                 }
             }
         }  
@@ -140,6 +185,8 @@ int main() {
             DrawText("MENU", menuButon.x + 35, menuButon.y + 15, 25, BLACK);
             DrawRectangleRec(geriButon, LIGHTGRAY);
             DrawText("GERI", geriButon.x + 35, geriButon.y + 15, 25, BLACK);
+            DrawRectangleRec(araButon,DARKGRAY);
+            DrawText("Kitap Ara", araButon.x + 35, araButon.y + 15, 25, BLACK);
             if(girisYapan == ADMIN){
                 if(adminDurumu==0){
                     DrawRectangleRec(ekleButon,DARKGRAY);
@@ -164,13 +211,10 @@ int main() {
                         if (aktifKutu == 2) DrawText("-> Yazar yaziliyor...", 780, 490, 20, GRAY);
                     }else{
                         DrawText("Kitap sisteme eklendi.", 400, 150, 35, DARKGREEN);
-                        DrawText("tekrar eklememk icin TAB", 400, 200, 35, DARKGREEN);
                     }   
                 }
             }
-            else if(girisYapan==UYE){
-                DrawText("YAKINDA...", 400, 200, 35, DARKGREEN);
-            }
+            //BurayaGelicek
         }
         EndDrawing();
     }
