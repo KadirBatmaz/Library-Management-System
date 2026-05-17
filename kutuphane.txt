@@ -1,100 +1,52 @@
-suc ve ceza,1866,fyodor dostoyevski
-sefiller,1862,victor hugo
-gurur ve onyargi,1813,jane austen
-1984,1949,george orwell
-hayvan ciftligi,1945,george orwell
-yeraltindan notlar,1864,fyodor dostoyevski
-kumarbaz,1867,fyodor dostoyevski
-anna karenina,1877,lev tolstoy
-savas ve baris,1869,lev tolstoy
-don kisot,1605,miguel de cervantes
-yuz yillik yalnizlik,1967,gabriel garcia marquez
-kolera gunlerinde ask,1985,gabriel garcia marquez
-kirmizi pazartesi,1981,gabriel garcia marquez
-calikusu,1922,resat nuri guntekin
-yaprak dokumu,1930,resat nuri guntekin
-dudaktan kalbe,1925,resat nuri guntekin
-acimak,1928,resat nuri guntekin
-eylul,1901,mehmet rauf
-ask i memnu,1900,halid ziya usakligil
-mai ve siyah,1897,halid ziya usakligil
-intibah,1876,namik kemal
-vatan yahut silistre,1873,namik kemal
-araba sevdasi,1896,recaizade mahmut ekrem
-serguzest,1888,samipasazade sezai
-tutunamayanlar,1972,oguz atay
-tehlikeli oyunlar,1973,oguz atay
-bir bilim adaminin romani,1975,oguz atay
-saatleri ayarlama enstitusu,1961,ahmet hamdi tanpinar
-huzur,1949,ahmet hamdi tanpinar
-sahnenin disindakiler,1950,ahmet hamdi tanpinar
-mahur beste,1944,ahmet hamdi tanpinar
-ince memed,1955,yasar kemal
-yer demir gok bakir,1963,yasar kemal
-ortadirek,1960,yasar kemal
-olmez otu,1968,yasar kemal
-yilanlarin ocu,1954,fakir baykurt
-tirpan,1970,fakir baykurt
-kaplumbagalar,1967,fakir baykurt
-onuncu koy,1961,fakir baykurt
-aylak adam,1959,yusuf atilgan
-anayurt oteli,1973,yusuf atilgan
-canistan,2000,yusuf atilgan
-benim adim kirmizi,1998,orhan pamuk
-kar,2002,orhan pamuk
-masumiyet muzesi,2008,orhan pamuk
-beyaz kale,1985,orhan pamuk
-kara kitap,1990,orhan pamuk
-yeni hayat,1994,orhan pamuk
-sessiz ev,1983,orhan pamuk
-simyaci,1988,paulo coelho
-veronika olmek istiyor,1998,paulo coelho
-on bir dakika,2003,paulo coelho
-kucuk prens,1943,antoine de saint exupery
-seker portakali,1968,jose mauro de vasconcelos
-gunesi uyandiralim,1974,jose mauro de vasconcelos
-delifisek,1963,jose mauro de vasconcelos
-ucurtma avcisi,2003,khaled hosseini
-bin muhtesem gunes,2007,khaled hosseini
-ve daglara yankilandi,2013,khaled hosseini
-fareler ve insanlar,1937,john steinbeck
-gazap uzumleri,1939,john steinbeck
-cennetin dogusu,1952,john steinbeck
-inci,1947,john steinbeck
-bulbulu oldurmek,1960,harper lee
-tespih agacinin golgesinde,2015,harper lee
-yabanci,1942,albert camus
-veba,1947,albert camus
-dusus,1956,albert camus
-donusum,1915,franz kafka
-dava,1925,franz kafka
-sato,1926,franz kafka
-amerika,1927,franz kafka
-korluk,1995,jose saramago
-gormek,2004,jose saramago
-olum bir varmis bir yokmus,2005,jose saramago
-kabil,2009,jose saramago
-martin eden,1909,jack london
-beyaz dis,1906,jack london
-vahsetin cagrisi,1903,jack london
-deniz kurdu,1904,jack london
-moby dick,1851,herman melville
-bartleby,1853,herman melville
-frankenstein,1818,mary shelley
-dracula,1897,bram stoker
-dorian gray in portresi,1890,oscar wilde
-usta ve margarita,1967,mihail bulgakov
-kopek kalbi,1968,mihail bulgakov
-lolita,1955,vladimir nabokov
-solgun ates,1962,vladimir nabokov
-kuzey isiklari,1995,philip pullman
-kehribar durbun,2000,philip pullman
-keskin bicak,1997,philip pullman
-fahrenheit 451,1953,ray bradbury
-mars yilliklari,1950,ray bradbury
-resimli adam,1951,ray bradbury
-cesur yeni dunya,1932,aldous huxley
-algi kapilari,1954,aldous huxley
-ada,1962,aldous huxley
-otostopcunun galaksi rehberi,1979,douglas adams
-dune,1965,frank herbert
+suc ve ceza,2021,fyodor dostoyevski,0
+suc ve ceza,2021,fyodor dostoyevski,0
+sefiller,2019,victor hugo,1
+gurur ve onyargi,2020,jane austen,1
+1984,2022,george orwell,1
+hayvan ciftligi,2023,george orwell,1
+bulbulu oldurmek,2018,harper lee,1
+yuzyillik yalnizlik,2021,gabriel garcia marquez,1
+muhtesem gatsby,2017,f. scott fitzgerald,1
+cavdar tarlasinda cocuklar,2019,j. d. salinger,1
+ince memed 1,2020,yasar kemal,1
+tutunamayanlar,2022,oguz atay,1
+saatleri ayarlama enstitusu,2021,ahmet hamdi tanpinar,1
+kurk mantolu madonna,2019,sabahattin ali,1
+mai ve siyah,2018,halit ziya usakligil,1
+calikusu,2020,resat nuri guntekin,1
+donusum,2022,franz kafka,1
+anna karenina,2021,lev tolstoy,0
+savas ve baris,2018,lev tolstoy,1
+madam bovary,2019,gustave flaubert,1
+yabanci,2021,albert camus,1
+fareler ve insanlar,2020,john steinbeck,1
+gazap uzumleri,2017,john steinbeck,1
+sineklerin tanrisi,2023,william golding,1
+kucuk prens,2021,antoine de saint-exupery,1
+cesur yeni dunya,2022,aldous huxley,1
+fahrenheit 451,2019,ray bradbury,1
+yeraltindan notlar,2020,fyodor dostoyevski,1
+satranc,2021,stefan zweig,1
+frankenstein,2018,mary shelley,1
+ugultulu tepeler,2019,emily bronte,1
+don kisot,2022,miguel de cervantes,1
+ilahi komedi,2017,dante alighieri,1
+sirca fanus,2021,sylvia plath,1
+martin eden,2020,jack london,1
+kirmizi pazartesi,2022,gabriel garcia marquez,1
+beyaz zambaklar ulkesinde,2019,grigori petrov,1
+seker portakali,2021,jose mauro de vasconcelos,1
+puslu kitalar atlasi,2023,ihsan oktay anar,1
+tehlikeli oyunlar,2020,oguz atay,1
+aylak adam,2018,yusuf atilgan,1
+anayurt oteli,2019,yusuf atilgan,1
+yaban,2022,yakup kadri karaosmanoglu,1
+kuyucakli yusuf,2021,sabahattin ali,1
+ask-i memnu,2020,halit ziya usakligil,1
+icimizdeki seytan,2021,sabahattin ali,1
+sirca kosk,2019,sabahattin ali,1
+dokuzuncu hariciye kogusu,2022,peyami safa,1
+fatih-harbiye,2018,peyami safa,1
+sinekli bakkal,2020,halide edib adivar,1
+amak-i hayal,2021,filibeli ahmed hilmi,1
+naber,2026,kadir,1
